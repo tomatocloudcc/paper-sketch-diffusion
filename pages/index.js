@@ -378,7 +378,7 @@ function _toPixels (canvas) {
               <br></br>
               风格：
               <select id="dropdown" onChange={handleStyleChange}>
-                <option value="">N/A</option>
+                <option value="">无</option>
                 <option value="Studio Ghibli">吉卜力工作室</option>
                 <option value="Pixar">皮克斯</option>
                 <option value="Cyberpunk">赛博朋克</option>
@@ -397,11 +397,13 @@ function _toPixels (canvas) {
                 <option value="Poster style">海报风格</option>
                 <option value="Ink style">水墨风格</option>
               </select>
+
+              <br></br>
               <br></br>
 
               艺术家：
               <select id="dropdown" onChange={handleArtChange}>
-                <option value="">N/A</option>
+                <option value="">无</option>
                 <option value="Vincent van Gogh">文森特-凡高</option>
                 <option value="Pablo Picasso">巴勃罗-毕加索</option>
                 <option value="Wassily Kandinsky">瓦西里·康定斯基</option>
@@ -414,9 +416,11 @@ function _toPixels (canvas) {
               </select>
 
               <br></br>
+              <br></br>
+
               构图：
               <select id="dropdown" onChange={handleCompositionChange}>
-                <option value="">N/A</option>
+                <option value="">无</option>
                 <option value="close up">特写</option>
                 <option value="full body">全身</option>
                 <option value="portrait">肖像</option>
@@ -433,9 +437,11 @@ function _toPixels (canvas) {
               </select>
 
               <br></br>
+              <br></br>
+
               技术效果：
               <select id="dropdown" onChange={handleTechChange}>
-                <option value="">N/A</option>
+                <option value="">无</option>
                 <option value="epic detail">史诗般的细节</option>
                 <option value="dramatic contrast">戏剧性的对比</option>
                 <option value="octane render">OC渲染器</option>
@@ -445,9 +451,11 @@ function _toPixels (canvas) {
               </select>
 
               <br></br>
+              <br></br>
+
               氛围：
               <select id="dropdown" onChange={handleAtmosphereChange}>
-                <option value="">N/A</option>
+                <option value="">无</option>
                 <option value="happy">快乐</option>
                 <option value="excited">兴奋</option>
                 <option value="angry">愤怒</option>
@@ -465,9 +473,11 @@ function _toPixels (canvas) {
               </select>
 
               <br></br>
+              <br></br>
+
               清晰度：
               <select id="dropdown" onChange={handleResolutionChange}>
-                <option value="">N/A</option>
+                <option value="">无</option>
                 <option value="HD">高清</option>
                 <option value="4k">4k</option>
                 <option value="8k">8k</option>
