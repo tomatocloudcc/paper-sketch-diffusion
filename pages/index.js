@@ -32,6 +32,7 @@ export default function Home() {
   var [picComposition, setPicCompositionStr] = useState(null);
   var [picTech, setPicTechStr] = useState(null);
   var [picAtmosphere, setPicAtmosphereStr] = useState(null);
+  var [picBackground, setPicBackgroundStr] = useState(null);
   var [picResolution, setPicResolutionStr] = useState(null);
   
   
@@ -143,6 +144,11 @@ export default function Home() {
       prompt += "," + picAtmosphere;
     }
 
+    if(picBackground && picBackground.length>0)
+    {
+      prompt += "," + picBackground;
+    }
+
     if(picResolution && picResolution.length>0)
     {
       prompt += "," + picResolution;
@@ -166,41 +172,41 @@ export default function Home() {
       image: fileUrl,
     };
 
-    const response = await fetch("/api/predictions", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(body),
-    });
-    let prediction = await response.json();
+    // const response = await fetch("/api/predictions", {
+    //   method: "POST",
+    //   headers: {
+    //     "Content-Type": "application/json",
+    //   },
+    //   body: JSON.stringify(body),
+    // });
+    // let prediction = await response.json();
 
-    setPredictions((predictions) => ({
-      ...predictions,
-      [prediction.id]: prediction,
-    }));
+    // setPredictions((predictions) => ({
+    //   ...predictions,
+    //   [prediction.id]: prediction,
+    // }));
 
-    if (response.status !== 201) {
-      setError(prediction.detail);
-      return;
-    }
+    // if (response.status !== 201) {
+    //   setError(prediction.detail);
+    //   return;
+    // }
 
-    while (
-      prediction.status !== "succeeded" &&
-      prediction.status !== "failed"
-    ) {
-      await sleep(500);
-      const response = await fetch("/api/predictions/" + prediction.id);
-      prediction = await response.json();
-      setPredictions((predictions) => ({
-        ...predictions,
-        [prediction.id]: prediction,
-      }));
-      if (response.status !== 200) {
-        setError(prediction.detail);
-        return;
-      }
-    }
+    // while (
+    //   prediction.status !== "succeeded" &&
+    //   prediction.status !== "failed"
+    // ) {
+    //   await sleep(500);
+    //   const response = await fetch("/api/predictions/" + prediction.id);
+    //   prediction = await response.json();
+    //   setPredictions((predictions) => ({
+    //     ...predictions,
+    //     [prediction.id]: prediction,
+    //   }));
+    //   if (response.status !== 200) {
+    //     setError(prediction.detail);
+    //     return;
+    //   }
+    // }
 
     
 
@@ -301,23 +307,27 @@ function _toPixels (canvas) {
   };
 
   const handleStyleChange = (event) => {
-    picStyle = event.target.value;
+    setPicStyleStr(event.target.value);
   }
   const handleArtChange = (event) => {
-    picArt = event.target.value;
+    setPicArtStr(event.target.value);
   }
   const handleCompositionChange = (event) => {
-    picComposition = event.target.value;
+    setPicCompositionStr(event.target.value);
   }
   const handleTechChange = (event) => {
-    picTech = event.target.value;
+    setPicTechStr(event.target.value);
   }
   const handleAtmosphereChange = (event) => {
-    picAtmosphere = event.target.value;
+    setPicAtmosphereStr(event.target.value);
+  }
+
+  const handleBackgroundChange = (event) => {
+    setPicBackgroundStr(event.target.value);
   }
 
   const handleResolutionChange = (event) => {
-    picResolution = event.target.value;
+    setPicResolutionStr(event.target.value);
   }
 
 
@@ -383,7 +393,17 @@ function _toPixels (canvas) {
                 <option value="Pixar">皮克斯</option>
                 <option value="Cyberpunk">赛博朋克</option>
                 <option value="Wasteland Punk">荒地朋克</option>
+                <option value="POPMART blind box">泡泡马特盲盒</option>
                 <option value="Illustration">插图</option>
+                <option value="Ink style">水墨风格</option>
+                <option value="Chinese oil painting">中国油画</option>
+                <option value="Tradition Chinese Ink Painting style">国风</option>
+                <option value="Japanese comics/manga">日本漫画风格</option>
+                <option value="film photography">电影镜头</option>
+                <option value="black and white">黑白</option>
+                <option value="Holographic">镭射</option>
+                <option value="Fashion">时尚</option>
+                <option value="ドット絵 and Pixel Art">像素画</option>
                 <option value="Realism">现实主义</option>
                 <option value="Landscape">景观</option>
                 <option value="Surrealism">超现实主义</option>
@@ -393,9 +413,8 @@ function _toPixels (canvas) {
                 <option value="Neo-realism">新现实主义</option>
                 <option value="Post-impressionism">后印象派</option>
                 <option value="Architectural design">建筑设计</option>
-                <option value="Watercolor">水彩画</option>
                 <option value="Poster style">海报风格</option>
-                <option value="Ink style">水墨风格</option>
+                <option value="botw">旷野之息</option>
               </select>
 
               <br></br>
@@ -413,6 +432,8 @@ function _toPixels (canvas) {
                 <option value="Norman Rockwell">诺曼-洛克威尔</option>
                 <option value="Jackson Pollock">杰克逊-波洛克</option>
                 <option value="Mattias Adolfsso">马蒂亚斯-阿道夫索</option>
+                <option value="Hayao Miyazaki animation style">宫崎骏</option>
+                <option value="Makoto Shinkai animation style">新海诚</option>
               </select>
 
               <br></br>
@@ -421,7 +442,7 @@ function _toPixels (canvas) {
               构图：
               <select id="dropdown" onChange={handleCompositionChange}>
                 <option value="">无</option>
-                <option value="close up">特写</option>
+                <option value="closeup view">特写</option>
                 <option value="full body">全身</option>
                 <option value="portrait">肖像</option>
                 <option value="symmetrical">对称的</option>
@@ -444,10 +465,23 @@ function _toPixels (canvas) {
                 <option value="">无</option>
                 <option value="epic detail">史诗般的细节</option>
                 <option value="dramatic contrast">戏剧性的对比</option>
-                <option value="octane render">OC渲染器</option>
+                <option value="3d,air blower,Soft Lights,octane render">OC渲染器</option>
                 <option value="unreal engine 5">虚幻引擎5</option>
-                <option value="vray">vray渲染器</option>
-                <option value="dof">透明度</option>
+                <option value="maxon cinema vray,4D">vray渲染器</option>
+                <option value="3D C4D">3D</option>
+              </select>
+
+              <br></br>
+              <br></br>
+
+              背景：
+              <select id="dropdown" onChange={handleBackgroundChange}>
+                <option value="">无</option>
+                <option value="warm color background">暖色背景</option>
+                <option value="cold color background">暖色背景</option>
+                <option value="smooth color background">渐变背景</option>
+                <option value="clean background">干净背景</option>
+                <option value="bokeh background">虚化背景</option>
               </select>
 
               <br></br>
@@ -478,11 +512,12 @@ function _toPixels (canvas) {
               清晰度：
               <select id="dropdown" onChange={handleResolutionChange}>
                 <option value="">无</option>
+                <option value="FHD,1080P,2K,4K,8K">全高清.1080P,2K,4K,8K</option>
+                <option value="8k smooth">8k流畅</option>
                 <option value="HD">高清</option>
-                <option value="4k">4k</option>
-                <option value="8k">8k</option>
-                <option value="16k">16k</option>
-                <option value="32k">32k</option>
+                <option value="high resolution">高分辨率</option>
+                <option value="hyper quality">高品质</option>
+                <option value="high detail">高细节</option>
               </select>
             </div>
           </div>
