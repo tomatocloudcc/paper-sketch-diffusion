@@ -172,41 +172,41 @@ export default function Home() {
       image: fileUrl,
     };
 
-    // const response = await fetch("/api/predictions", {
-    //   method: "POST",
-    //   headers: {
-    //     "Content-Type": "application/json",
-    //   },
-    //   body: JSON.stringify(body),
-    // });
-    // let prediction = await response.json();
+    const response = await fetch("/api/predictions", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify(body),
+    });
+    let prediction = await response.json();
 
-    // setPredictions((predictions) => ({
-    //   ...predictions,
-    //   [prediction.id]: prediction,
-    // }));
+    setPredictions((predictions) => ({
+      ...predictions,
+      [prediction.id]: prediction,
+    }));
 
-    // if (response.status !== 201) {
-    //   setError(prediction.detail);
-    //   return;
-    // }
+    if (response.status !== 201) {
+      setError(prediction.detail);
+      return;
+    }
 
-    // while (
-    //   prediction.status !== "succeeded" &&
-    //   prediction.status !== "failed"
-    // ) {
-    //   await sleep(500);
-    //   const response = await fetch("/api/predictions/" + prediction.id);
-    //   prediction = await response.json();
-    //   setPredictions((predictions) => ({
-    //     ...predictions,
-    //     [prediction.id]: prediction,
-    //   }));
-    //   if (response.status !== 200) {
-    //     setError(prediction.detail);
-    //     return;
-    //   }
-    // }
+    while (
+      prediction.status !== "succeeded" &&
+      prediction.status !== "failed"
+    ) {
+      await sleep(500);
+      const response = await fetch("/api/predictions/" + prediction.id);
+      prediction = await response.json();
+      setPredictions((predictions) => ({
+        ...predictions,
+        [prediction.id]: prediction,
+      }));
+      if (response.status !== 200) {
+        setError(prediction.detail);
+        return;
+      }
+    }
 
     
 
